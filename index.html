@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Доступ к сайту</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+    }
+    h2 {
+      margin-bottom: 12px;
+      color: #333;
+    }
+    p {
+      color: #555;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 12px;
+      width: 100%;
+      max-width: 320px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      box-sizing: border-box;
+      margin: 10px 0;
+    }
+    button {
+      padding: 12px 24px;
+      background: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #0055aa;
+    }
+    .error {
+      color: #d32f2f;
+      margin-top: 10px;
+      font-size: 14px;
+      display: none;
+    }
+    .g-recaptcha {
+      margin: 15px auto;
+      transform: scale(0.9);
+      transform-origin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔐 Доступ закрыт</h2>
+    <p>Введите пароль и подтвердите, что вы не робот</p>
+    
+    <input type="password" id="password" placeholder="Пароль" autocomplete="off">
+    
+    <!-- reCAPTCHA -->
+    <div class="g-recaptcha" data-sitekey="6Lddr78rAAAAACaTkB0MBzZR2HUAyIqNxjWpE0rx"></div>
+    
+    <button onclick="check()">Войти</button>
+    <p id="error" class="error">Неверный пароль или капча!</p>
+  </div>
+
+  <script>
+    function check() {
+      const pwd = document.getElementById('password').value;
+      const correctPassword = '7K1555'; // 
+      const captchaResponse = document.querySelector('.g-recaptcha iframe')?.title;
+
+      if (pwd === correctPassword && grecaptcha.getResponse() !== "") {
+        // Укажи ссылку на свой сайт Tilda
+        window.location.href = 'http://clasneiygoloc.tilda.ws/';
+      } else {
+        document.getElementById('error').style.display = 'block';
+      }
+    }
+
+    // Ввод по Enter
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') check();
+    });
+  </script>
+
+  <!-- Подключаем reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</body>
+</html>
